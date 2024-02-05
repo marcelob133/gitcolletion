@@ -1,20 +1,38 @@
+import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Dashboard } from "./pages/Dashboard";
+// import { Dashboard } from "./pages/Dashboard";
+// import { Repo } from "./pages/Repo";
 import { GlobalStyle } from './styles/global';
-import { Repo } from "./pages/Repo";
+
+const Dashboard = lazy(() => import(
+  /* webpackPrefetch: true */
+  /* webpackChunkName: "dashboard" */ './pages/Dashboard'
+));
+const Repo = lazy(() => import(
+  /* webpackPrefetch: true */
+  /* webpackChunkName: "repo" */ './pages/Repo'
+));
 
 
 let router = createBrowserRouter([
   {
     path: '/',
-    element: <Dashboard />,
+    element: (
+      <Suspense fallback={<div>Loading Repo...</div>}>
+        <Dashboard />
+      </Suspense>
+    ),
   },
   {
     path: '/repositories/*',
-    element: <Repo />,
+    element: (
+      <Suspense fallback={<div>Loading Repo...</div>}>
+        <Repo />
+      </Suspense>
+    ),
   },
 ]);
 
