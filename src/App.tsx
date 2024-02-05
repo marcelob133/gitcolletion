@@ -1,17 +1,29 @@
-import React from 'react';
-import {BrowserRouter} from 'react-router-dom'
-import {Routes} from './routes';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { Dashboard } from "./pages/Dashboard";
 import { GlobalStyle } from './styles/global';
+import { Repo } from "./pages/Repo";
 
-function App() {
+
+let router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Dashboard />,
+  },
+  {
+    path: '/repositories/*',
+    element: <Repo />,
+  },
+]);
+
+
+export default function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <RouterProvider router={router}/>
       <GlobalStyle />
     </>
   );
 }
-
-export default App;
